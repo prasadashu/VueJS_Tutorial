@@ -1,0 +1,136 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Vue</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <style>
+        .box{
+            padding: 100px 0;
+            width: 400px;
+            text-align: center;
+            background: #ddd;
+            margin: 20px;
+            display: inline-block;
+        }
+        body{
+            background: #eee;
+            max-width: 960px;
+            margin: 20px auto;
+        }
+        p, h3, ul{
+            margin: 0;
+            padding: 0;
+        }
+        li{
+            list-style-type: none;
+            background: #fff;
+            margin: 20px auto;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        li.fav{
+            background: #ff9ed2;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hello Vue!</h1>
+
+    <!--The below div tag will be controlled by Vue JS-->
+    <div id="app">
+        <p>{{ title }} - {{ author }} - {{ age }}</p>
+        
+        <!--The 'v-on:click' is called a directive-->
+        <!--The value of 'v-on:click' points to a JavaScript function-->
+        <!--The name of the button can be given as the value of the button tag-->
+        <!--The value of the 'v-on:click' directive is pointing to the 'age' variable-->
+        <!--The '++' followed by the 'age' variable increments the value by 1-->
+        <button v-on:click="age++">Increase Age</button>
+        <!--We will create a similar 'age' decrement button-->
+        <button v-on:click="age--">Decrease Age</button>
+        
+        <!--Modifying text when clicked on div-->
+        <div @click="title = 'This is the new title'">Change book title</div>
+
+        <!--Modifying text when clicked on div using methods-->
+        <!--Passing arguments to the function-->
+        <div @click="changeTitle('Oath Bringer')">Change book title using method</div>
+
+        <!--Creating a button to hide and unhide text-->
+        <!--Dynamically changing the text of the button-->
+        <button v-on:click="toggleShowHideBooks">
+            <span v-if="!showBooks">Show Books</span>
+            <span v-if="showBooks">Hide Books</span>
+        </button>
+
+        <!--Creating another button to hid and unhide text-->
+        <!--But using the 'else' clause to toggle button text-->
+        <button v-on:click="toggleShowHideBooks">
+            <span v-if="!showBooks">Show Books</span>
+            <span v-else>Hide Books</span>
+        </button>
+
+        <!--Using conditionals-->
+        <div v-if="showBooks">
+            <p>This is the conditional text - {{title}}</p>
+        </div>
+        <p v-if="showBooks">Test</p>
+
+        <br>
+
+        <!--Working on Mouse Events-->
+        <div class="box" @mouseover="handleEvent($event, 5)">mouseover (enter)</div>
+        <div class="box" @mouseleave="handleEvent">mouseleave</div>
+        <div class="box" @dblclick="handleEvent">double click</div>
+        <div class="box" @mousemove="handleMouseMove">Position - {{ x }} {{ y }}</div>
+
+        <!--Working with List-->
+        <div v-if="showBooks">
+            <p>{{ books[0].title }} - {{ books[0].author }}</p>
+            <p>{{ books[1].title }} - {{ books[1].author }}</p>
+            <p>{{ books[2].title }} - {{ books[2].author }}</p>
+        </div>
+
+        <!--For loop-->
+        <!--Toggle colour of list item background-->
+        <div v-if="showBooks">
+            <ul>
+                <li v-for="book in books" :class="{ fav: book.isFav }" @click="toggleFav(book)">
+                    <img :src="book.img" :alt="book.title">
+                    <h3>{{ book.title }}</h3>
+                    <h3>{{ book.author }}</h3>
+                </li>
+            </ul>
+        </div>
+
+        <br>
+        <hr>
+        <br>
+
+        <!--For loop-->
+        <!--Toggle colour of list item background-->
+        <!--Applying computed properties - filteredBooks-->
+        <div v-if="showBooks">
+            <ul>
+                <li v-for="book in filteredBooks" :class="{ fav: book.isFav }" @click="toggleFav(book)">
+                    <img :src="book.img" :alt="book.title">
+                    <h3>{{ book.title }}</h3>
+                    <h3>{{ book.author }}</h3>
+                </li>
+            </ul>
+        </div>
+
+        <!--Attribute Binding-->
+        <a v-bind:href="url">Some URL</a>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
